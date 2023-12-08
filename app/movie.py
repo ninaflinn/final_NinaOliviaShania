@@ -6,10 +6,7 @@ import requests
 from app.alpha import API_KEY
 
 def get_genre_list():
-    # TMDb API endpoint for getting the list of movie genres
     url = 'https://api.themoviedb.org/3/genre/movie/list'
-
-    # Parameters for the API request
     params = {
         'api_key': API_KEY,
     }
@@ -31,21 +28,13 @@ def get_genre_list():
         return None
 
 
-
-def fetch_data():
-    request_url = f"https://api.themoviedb.org/3/movie/550?api_key={API_KEY}"
-    response = requests.get(request_url)
-    parsed_response = json.loads(response.text)
-    print(type(parsed_response))
-    print(parsed_response.keys())
-    #pprint(parsed_response)
-
-    #data = parsed_response["genres"]
-    return data   
-
 if __name__ == "__main__":
-    data = get_genre_list()
-    print(data)
+    genres = get_genre_list()
+    if genres:
+        for genre in genres:
+            print(f"{genre['id']}: {genre['name']}")
+    else:
+        print("Failed to retrieve the list of genres.")
 
 
 
