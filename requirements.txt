@@ -1,3 +1,21 @@
+
+
+
+
 requests
 
+plotly
+
+pandas
+
 python-dotenv
+
+sendgrid==6.5.0
+
+
+flask
+
+pytest
+
+#PRODUCTION SERVER NEEDS THIS TO RUN THE WEB APP
+gunicorn

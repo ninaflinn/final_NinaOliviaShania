@@ -1,14 +1,21 @@
+
 import json
+from pprint import pprint
 
 from dotenv import load_dotenv
 import requests
 
-from app.alpha import API_KEY
+from plotly.express import line
+from app.alpha import MOVIE_API_KEY
+from app.email_service import send_email
 
 def get_genre_list():
+    # TMDb API endpoint for getting the list of movie genres
     url = 'https://api.themoviedb.org/3/genre/movie/list'
+
+    # Parameters for the API request
     params = {
-        'api_key': API_KEY,
+        'api_key': MOVIE_API_KEY,
     }
 
     try:
@@ -27,7 +34,6 @@ def get_genre_list():
         print(f"Error making TMDb API request: {e}")
         return None
 
-
 if __name__ == "__main__":
     genres = get_genre_list()
     if genres:
@@ -35,8 +41,3 @@ if __name__ == "__main__":
             print(f"{genre['id']}: {genre['name']}")
     else:
         print("Failed to retrieve the list of genres.")
-
-
-
-
-
