@@ -1,0 +1,20 @@
+
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "movies_actor" %}
+
+{% block content %}
+
+    <h2>Movies by Actor/Actress</h2>
+
+    <p>Request movie recommendations by actor or actress</p>
+
+    <form action="/stocks/dashboard" method="POST">
+
+        <label>Actor/Actress Name:</label>
+        <input type="text" name="actor" placeholder="Ryan Gosling" value="Ryan Gosling">
+        <br>
+
+        <button class="btn btn-success">Submit</button>
+    </form>
+
+{% endblock %}

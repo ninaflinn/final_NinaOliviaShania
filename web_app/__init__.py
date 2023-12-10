@@ -7,6 +7,7 @@ from flask import Flask
 from web_app.routes.home_routes import home_routes
 from web_app.routes.unemployment_routes import unemployment_routes
 from web_app.routes.stock_routes import stocks_routes
+from web_app.routes.movie_routes import movie_routes
 #from web_app.routes.book_routes import book_routes
 #from web_app.routes.weather_routes import weather_routes
 
@@ -20,6 +21,7 @@ def create_app():
     app.register_blueprint(home_routes)
     app.register_blueprint(unemployment_routes)
     app.register_blueprint(stocks_routes)
+    app.register_blueprint(movie_routes)
     #app.register_blueprint(book_routes)
     #app.register_blueprint(weather_routes)
     return app
