@@ -1,54 +1,68 @@
-from flask import Blueprint, request, render_template, redirect, flash, jsonify
-import requests
-from app.alpha import MOVIE_API_KEY  # Assuming MOVIE_API_KEY is imported from the correct location
-from app.email_service import send_email
-from app.movies_by_genre import get_genre_list
 
-movies_routes = Blueprint("movies_routes", __name__)
+# this is the "web_app/routes/stocks_routes.py" file ...
 
-@movies_routes.route("/movies/genres")
-def movies_genres():
-    print("MOVIES GENRES...")
+from flask import Blueprint, request, render_template, redirect, flash
 
-    try:
-        genres = get_genre_list()
-        if genres:
-            return render_template("movies_genres.html", genres=genres)
-        else:
-            flash("Failed to retrieve the list of genres.", "danger")
-            return redirect("/movies/form")  # Redirect to the movies form or another suitable route
+from app.stocks import fetch_stocks_data, format_usd
 
-    except Exception as err:
-        print('OOPS', err)
-        flash("Error fetching movie genres. Please try again!", "danger")
-        return redirect("/movies/form")  # Redirect to the movies form or another suitable route
+movie_routes = Blueprint("movie_routes", __name__)
 
-@movies_routes.route("/movies/search", methods=["GET", "POST"])
-def movies_search():
-    print("MOVIES SEARCH...")
+@movie_routes.route("/movie/form")
+def movies_form():
+    print("MOVIE FORM...")
+    return render_template("movie_form.html")
+
+@movie_routes.route("/movie/dashboard", methods=["GET", "POST"])
+def movies_dashboard():
+    print("STOCKS DASHBOARD...")
 
     if request.method == "POST":
+        # for data sent via POST request, form inputs are in request.form:
         request_data = dict(request.form)
+        print("FORM DATA:", request_data)
     else:
+        # for data sent via GET request, url params are in request.args
         request_data = dict(request.args)
+        print("URL PARAMS:", request_data)
 
-    genre_id = request_data.get("genre_id") or '28'  # Default genre ID for Action
-
-    start_year = request_data.get("start_year")
-    end_year = request_data.get("end_year")
-    lang = request_data.get("lang")
+    symbol = request_data.get("symbol") or "NFLX"
 
     try:
-        # Use genre_id to search for movies based on the selected genre
-        # Perform movie search based on other parameters (start_year, end_year, lang) similarly
+        df = fetch_stocks_data(symbol=symbol)
+        latest_close_usd = format_usd(df.iloc[0]["adjusted_close"])
+        latest_date = df.iloc[0]["timestamp"]
+        data = df.to_dict("records")
 
-        # Example usage of genre_id:
-        # movies = search_movies_by_genre(genre_id, start_year, end_year, lang)
-
-        flash("Fetched Movies Data!", "success")
-        return render_template("movies_results.html", movies=movies)  # Pass movies data to template
-
+        flash("Fetched Real-time Market Data!", "success")
+        return render_template("movie_dashboard.html",
+            symbol=symbol,
+            latest_close_usd=latest_close_usd,
+            latest_date=latest_date,
+            data=data
+        )
     except Exception as err:
         print('OOPS', err)
-        flash("Error fetching movies. Please try again!", "danger")
-        return redirect("/movies/form")  # Redirect to the movies form or another suitable route
+
+        flash("Market Data Error. Please check your symbol and try again!", "danger")
+        return redirect("/movie/form")
+
+#
+# API ROUTES
+#
+
+@movie_routes.route("/api/stocks.json")
+def movie_api():
+    print("STOCKS DATA (API)...")
+
+    # for data supplied via GET request, url params are in request.args:
+    url_params = dict(request.args)
+    print("URL PARAMS:", url_params)
+    symbol = url_params.get("symbol") or "NFLX"
+
+    try:
+        df = fetch_stocks_data(symbol=symbol)
+        data = df.to_dict("records")
+        return {"symbol": symbol, "data": data }
+    except Exception as err:
+        print('OOPS', err)
+        return {"message":"Market Data Error. Please try again."}, 404
