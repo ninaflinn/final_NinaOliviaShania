@@ -9,8 +9,8 @@ def movie_form():
     print("MOVIE FORM...")
     return render_template("movie_form.html")
 
-@movie_routes.route("/movie/dashboard", methods=["GET", "POST"])
-def movie_dashboard():
+@movie_routes.route("/movie/genre/dashboard", methods=["GET", "POST"])
+def movie_genre_dashboard():
     if request.method == "POST":
         # Get form data
         genre_id = request.form.get("genre_id")
@@ -27,14 +27,14 @@ def movie_dashboard():
 
         if movies:
             # Display movies if found
-            return render_template("movie_dashboard.html", movies=movies)
+            return render_template("movie_genre_dashboard.html", movies=movies)
         else:
             # Handle case when no movies are found
             return render_template("no_movies_found.html")
 
     # Direct access to the movie dashboard without form submission
-    print("Direct Access to Movie Dashboard")
-    return render_template("movie_dashboard.html", movies=None)
+    print("Direct Access to Movie Genre Dashboard")
+    return render_template("movie_genre_dashboard.html", movies=None)
 
 
 

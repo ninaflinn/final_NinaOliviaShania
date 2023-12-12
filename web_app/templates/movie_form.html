@@ -7,14 +7,14 @@
 
     <p>Search for movies...</p>
 
-    <form action="/movie/dashboard" method="GET">
+    <form action="/movie/genre/dashboard" method="POST">
 
         <label>Select Genre:</label>
         <select name="genre_id">
             <option value=28>Action</option>
             <option value=12>Adventure</option>
             <option value=16>Animation</option>
-            <option value=35>Comedy</option>
+            <option value=35 selected>Comedy</option>
             <option value=80>Crime</option>
             <option value=99>Documentary</option>
             <option value=18>Drama</option>
@@ -31,19 +31,18 @@
             <option value=10752>War</option>
             <option value=37>Western</option>
         </select>
-        </select>
         <br>
 
         <label>Start Year:</label>
-        <input type="text" name="start_year" class="form-control" placeholder="Start Year">
+        <input type="text" name="start_year" class="form-control" placeholder="Start Year" value ="1990">
         <br>
 
         <label>End Year:</label>
-        <input type="text" name="end_year" class="form-control" placeholder="End Year">
+        <input type="text" name="end_year" class="form-control" placeholder="End Year" value="2024">
         <br>
 
         <label>Language:</label>
-        <input type="text" name="lang" class="form-control" placeholder="Language">
+        <input type="text" name="lang" class="form-control" placeholder="Language" value="en">
         <br>
 
         <button type="submit" class="btn btn-success">Search</button>
