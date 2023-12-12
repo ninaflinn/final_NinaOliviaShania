@@ -29,16 +29,23 @@ def search_movies_by_genre(genre_id, start_year=None, end_year=None, lang=None):
         # Parse the JSON response
         data = response.json()
 
-        # Extract and return the list of movies
+        # Extract the list of movies
         movies = data.get('results', [])
 
-        # FILTER BY YEAR WITHIN RANGE
+        # Filter movies by year within range
         if start_year and end_year:
             movies = [movie for movie in movies if int(start_year) <= int(movie['release_date'][:4]) <= int(end_year)]
 
-        # FILTER BY LANGUAGE:
+        # Filter movies by language
         if lang:
             movies = [movie for movie in movies if movie['original_language'] == lang]
+
+        # Fetch poster URLs for each movie
+        for movie in movies:
+            if movie.get('poster_path'):
+                movie['poster_url'] = f"https://image.tmdb.org/t/p/w500{movie['poster_path']}"
+            else:
+                movie['poster_url'] = None
 
         return movies
 
@@ -47,12 +54,13 @@ def search_movies_by_genre(genre_id, start_year=None, end_year=None, lang=None):
         return None
 
 
+
 if __name__ == "__main__":
     genre_id = '28'
-    
+
     # Search for movies by genre
     movies = search_movies_by_genre(genre_id)
-    
+
     # Display the results
     if movies:
         for movie in movies:

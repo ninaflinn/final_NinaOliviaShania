@@ -1,0 +1,1 @@
+from app.movies_by_genre import search_movies_by_genre

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template
+from flask import Blueprint, request, render_template, flash, redirect
 
 from app.movies_by_genre import search_movies_by_genre
 
@@ -9,8 +9,8 @@ def movie_form():
     print("MOVIE FORM...")
     return render_template("movie_form.html")
 
-@movie_routes.route("/movie/dashboard", methods=["GET", "POST"])
-def movie_dashboard():
+@movie_routes.route("/movie/genre/dashboard", methods=["GET", "POST"])
+def movie_genre_dashboard():
     if request.method == "POST":
         # Get form data
         genre_id = request.form.get("genre_id")
@@ -22,19 +22,22 @@ def movie_dashboard():
 
         # Call function to get movies based on user criteria
         movies = search_movies_by_genre(genre_id, start_year, end_year, lang)
+        #breakpoint()
 
         print("Movies Retrieved:", movies)  # Check movies retrieved
 
-        if movies:
+        if any(movies):
             # Display movies if found
-            return render_template("movie_dashboard.html", movies=movies)
+            return render_template("movie_genre_dashboard.html", movies=movies)
         else:
             # Handle case when no movies are found
-            return render_template("no_movies_found.html")
+            #return render_template("no_movies_found.html")
+            flash("OOPS, couldn't find any matching movies", "danger")
+            return redirect("/movie/form")
 
     # Direct access to the movie dashboard without form submission
-    print("Direct Access to Movie Dashboard")
-    return render_template("movie_dashboard.html", movies=None)
+    print("Direct Access to Movie Genre Dashboard")
+    return render_template("movie_genre_dashboard.html", movies=None)
 
 
 
