@@ -1,0 +1,15 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "director_form" %}
+
+{% block content %}
+    <h2>Director Search</h2>
+
+    <p>Search for movies by director...</p>
+
+    <form action="/movie/director/dashboard" method="POST">
+        <label>Director Name:</label>
+        <input type="text" name="director_name" class="form-control" placeholder="Director Name" required>
+        <br>
+        <button type="submit" class="btn btn-success">Search</button>
+    </form>
+{% endblock %}

@@ -36,6 +36,35 @@ def movie_genre_dashboard():
     print("Direct Access to Movie Genre Dashboard")
     return render_template("movie_genre_dashboard.html", movies=None)
 
+@movie_routes.route("/movie/director/form", methods=["GET"])
+def movie_director_form():
+    print("MOVIE FORM...")
+    return render_template("movie_director_form.html")
+
+@movie_routes.route("/movie/director/dashboard", methods=["GET", "POST"])
+def movie_director_dashboard():
+    if request.method == "GET":
+        # Get form data
+        director_name = request.form.get("director_name")
+
+        print("Received Form Data:", director_name)  # Check form data
+
+        # Call function to get movies based on user criteria
+        movies = search_movies_by_director(director_name)
+
+        print("Movies Retrieved:", movies)  # Check movies retrieved
+
+        if movies:
+            # Display movies if found
+            return render_template("movie_director_dashboard.html", movies=movies)
+        else:
+            # Handle case when no movies are found
+            return render_template("no_movies_found.html")
+
+    # Direct access to the movie dashboard without form submission
+    print("Direct Access to Movie Director Dashboard")
+    return render_template("movie_director_dashboard.html", movies=None)
+
 
 
 @movie_routes.route("/api/movies.json")
