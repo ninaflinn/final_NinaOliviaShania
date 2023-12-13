@@ -17,47 +17,36 @@ Install packages:
 pip install -r requirements.txt
 ```
 
-Obtain an [API Key from Alphavantage](https://www.alphavantage.co/support/#api-key) or from the prof (`ALPHAVANTAGE_API_KEY`).
-
-You must first follow the [setup instructions](https://github.com/prof-rossetti/intro-to-python/blob/main/notes/python/packages/sendgrid.md) to create an account, verify your account, setup a single sender, and obtain an API Key.
+Obtain an [API Key from TheMovieDB](https://developer.themoviedb.org/docs).
 
 Create a ".env" file and paste in the following contents:
 
 ```sh
 # this is the ".env" file...
-
-ALPHAVANTAGE_API_KEY="_________"
+ALPHAVANTAGE_API_KEY="_______"
 MAILGUN_API_KEY="_______"
-MAILGUN_SENDER_ADDRESS="________"
-MAILGUN_DOMAIN="sandbox____.mailgun.org"
+MAILGUN_SENDER_ADDRESS="_______"
+MAILGUN_DOMAIN="_______"
+
+FLASK_APP="web_app"
+MOVIE_API_KEY = "_______"
 ```
 
 
 
 # Usage
 
-Run the example script:
 
+Run the movie genre dashboard:
 ```sh
-python app/my_script.py
+python -m app.movies_by_genre
 ```
 
-Run the unemployment report:
+Run the movie director dashboard:
 ```sh
-#python app/unemployment.py
-python -m app.unemployment
+python -m app.movies_by_director
 ```
 
-Run the stocks report:
-```sh
-python -m app.stocks
-```
-
-Send an email:
-
-```sh
-python app/email_service.py
-```
 ### Web App
 
 Run the web app (then view in the browser at http://localhost:5000/):
