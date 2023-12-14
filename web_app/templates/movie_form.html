@@ -5,7 +5,7 @@
 
     <h2>Movie Form</h2>
 
-    <p>Search for movies...</p>
+    <p class="lead">Search for movies by genre, release year, and language</p>
 
     {% if error_message %}
         <div class="alert alert-danger" role="alert">
@@ -38,6 +38,8 @@
             <option value=37>Western</option>
         </select>
         <br>
+
+        <p> </p>
 
         <label>Start Year:</label>
         <input type="text" name="start_year" class="form-control" placeholder="Start Year" value ="1990">
