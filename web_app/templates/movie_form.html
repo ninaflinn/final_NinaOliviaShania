@@ -5,13 +5,7 @@
 
     <h2>Movie Form</h2>
 
-    <p class="lead">Search for movies by genre, release year, and language</p>
-
-    {% if error_message %}
-        <div class="alert alert-danger" role="alert">
-            {{ error_message }}
-        </div>
-    {% endif %}
+    <p>Search for movies...</p>
 
     <form action="/movie/genre/dashboard" method="POST">
 
@@ -39,8 +33,6 @@
         </select>
         <br>
 
-        <p> </p>
-        
         <label>Start Year:</label>
         <input type="text" name="start_year" class="form-control" placeholder="Start Year" value ="1990">
         <br>
@@ -49,8 +41,16 @@
         <input type="text" name="end_year" class="form-control" placeholder="End Year" value="2024">
         <br>
 
-        <label>Language:</label>
-        <input type="text" name="lang" class="form-control" placeholder="Language" value="en">
+        <label for="languageSelect">Language:</label>
+        <select name="lang" id="languageSelect" class="form-select">
+            <option value="en" selected>English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="it">Italian</option>
+            <option value="pt">Portuguese</option>
+            <!-- Add other language options as needed -->
+        </select>
         <br>
 
         <button type="submit" class="btn btn-success">Search</button>

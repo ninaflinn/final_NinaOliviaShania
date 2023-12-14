@@ -33,8 +33,9 @@ def movie_genre_dashboard():
                 return render_template("movie_genre_dashboard.html", movies=movies)
             else:
                 # Handle case when no movies are found
+                print("error")
                 error_message = "No movies found for the specified criteria."
-                return render_template("movie_form.html", error_message=error_message)
+                return render_template("movie_genre_dashboard.html", movies=None, error_message=error_message)
 
         # Direct access to the movie dashboard without form submission
         print("Direct Access to Movie Genre Dashboard")
@@ -46,7 +47,8 @@ def movie_genre_dashboard():
 
         # Render the form template with an error message
         error_message = "An error occurred. Please check your input and try again."
-        return render_template("movie_form.html", error_message=error_message)
+        return render_template("movie_form.html", movies=None, error_message=error_message)
+
 
 @movie_routes.route("/movie/director/form", methods=["GET"])
 def movie_director_form():
@@ -72,6 +74,7 @@ def movie_director_dashboard():
                 return render_template("movie_director_dashboard.html", movies=movies)
             else:
                 # Handle case when no movies are found
+                #print("error")
                 error_message = "No movies found for the specified director."
                 return render_template("movie_director_form.html", error_message=error_message)
 
