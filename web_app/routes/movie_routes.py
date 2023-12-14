@@ -67,6 +67,10 @@ def movie_director_dashboard():
             # Call function to get movies based on user criteria
             movies = search_movies_by_director(director_name)
 
+            #for movie in movies:
+            #    print(movie['title'])
+            #breakpoint()
+
             print("Movies Retrieved:", movies)  # Check movies retrieved
 
             if movies:
