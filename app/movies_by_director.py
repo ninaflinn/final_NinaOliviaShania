@@ -51,7 +51,16 @@ def search_movies_by_director(director_name):
 
             # Extract and return the list of movies directed by the person
             movies = person_credits_data.get('crew', [])
+
+            # Fetch poster URLs for each movie
+            for movie in movies:
+                if movie.get('poster_path'):
+                    movie['poster_url'] = f"https://image.tmdb.org/t/p/w500{movie['poster_path']}"
+                else:
+                    movie['poster_url'] = None
+        
             return movies
+        
 
     except requests.exceptions.RequestException as e:
         print(f"Error making TMDb API request: {e}")
