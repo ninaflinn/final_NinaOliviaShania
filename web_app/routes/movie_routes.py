@@ -114,7 +114,7 @@ def movie_actor_dashboard():
                 return render_template("movie_actor_dashboard.html", movies=movies)
             else:
                 # Handle case when no movies are found
-                error_message = "No movies found for the specified director."
+                error_message = "No movies found for the specified actor or actress."
                 return render_template("movie_actor_form.html", error_message=error_message)
 
         # Direct access to the movie dashboard without form submission

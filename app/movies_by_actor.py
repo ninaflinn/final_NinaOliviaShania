@@ -28,13 +28,13 @@ def search_movies_by_actor(actor_name):
         # Parse the JSON response for the person search
         person_search_data = person_search_response.json()
 
-        # Extract the person (director) ID from the search results
+        # Extract the person (actor) ID from the search results
         person_id = None
         if person_search_data['results']:
             person_id = person_search_data['results'][0]['id']
 
         if person_id is not None:
-            # TMDb API endpoint for getting a person's (director's) movie credits
+            # TMDb API endpoint for getting a person's (actor's) movie credits
             person_credits_url = f'https://api.themoviedb.org/3/person/{person_id}/movie_credits'
 
             # Parameters for the person credits API request
@@ -49,7 +49,7 @@ def search_movies_by_actor(actor_name):
             # Parse the JSON response for the person credits
             person_credits_data = person_credits_response.json()
 
-            # Extract and return the list of movies directed by the person
+            # Extract and return the list of movies with this person in it
             movies = person_credits_data.get('crew', [])
 
             # Fetch poster URLs for each movie
