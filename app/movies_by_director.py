@@ -1,9 +1,14 @@
+
 import json
 from pprint import pprint
-import requests
+
 from dotenv import load_dotenv
+import requests
+
 from plotly.express import line
 from app.alpha import MOVIE_API_KEY
+
+import requests
 
 def search_movies_by_director(director_name):
     # TMDb API endpoint for searching for a person (director)
