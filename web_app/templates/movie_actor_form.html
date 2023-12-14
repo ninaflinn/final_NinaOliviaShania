@@ -1,10 +1,10 @@
 {% extends "bootstrap_5_layout.html" %}
-{% set active_page = "movie_director_form" %}
+{% set active_page = "movie_actor_form" %}
 
 {% block content %}
     <h2>Director Search</h2>
 
-    <p class="lead">Search for movies by director name</p>
+    <p class="lead">Search for movies by actor/actress name</p>
 
     {% if error_message %}
         <div class="alert alert-danger" role="alert">
@@ -12,9 +12,9 @@
         </div>
     {% endif %}
 
-    <form action="/movie/director/dashboard" method="POST">
-        <label>Director Name:</label>
-        <input type="text" name="director_name" class="form-control" placeholder="Enter name here" required>
+    <form action="/movie/actor/dashboard" method="POST">
+        <label>Actor/Actress Name:</label>
+        <input type="text" name="actor_name" class="form-control" placeholder="Enter name here" required>
         <br>
         <button type="submit" class="btn btn-success">Search</button>
     </form>
