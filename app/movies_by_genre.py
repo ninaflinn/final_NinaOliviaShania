@@ -7,7 +7,6 @@ import requests
 
 from plotly.express import line
 from app.alpha import MOVIE_API_KEY
-from app.email_service import send_email
 
 import requests
 
