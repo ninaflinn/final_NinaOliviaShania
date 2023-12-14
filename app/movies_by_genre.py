@@ -60,7 +60,7 @@ if __name__ == "__main__":
     
     # Search for movies by genre
     movies = search_movies_by_genre(genre_id)
-    
+    print(movies[0].keys())
     # Display the results
     if movies:
         for movie in movies:
