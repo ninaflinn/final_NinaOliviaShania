@@ -1,14 +1,9 @@
-
 import json
 from pprint import pprint
-
-from dotenv import load_dotenv
 import requests
-
+from dotenv import load_dotenv
 from plotly.express import line
 from app.alpha import MOVIE_API_KEY
-
-import requests
 
 def search_movies_by_director(director_name):
     # TMDb API endpoint for searching for a person (director)
@@ -52,27 +47,31 @@ def search_movies_by_director(director_name):
             # Extract and return the list of movies directed by the person
             movies = person_credits_data.get('crew', [])
 
-            # Fetch poster URLs for each movie
+            # Create a set to keep track of unique movie ids
+            unique_movie_ids = set()
+
+            # Filter out duplicate movies based on their id
+            filtered_movies = []
             for movie in movies:
-                if movie.get('poster_path'):
-                    movie['poster_url'] = f"https://image.tmdb.org/t/p/w500{movie['poster_path']}"
-                else:
-                    movie['poster_url'] = None
-        
-            return movies
-        
+                if movie.get('id') and movie['id'] not in unique_movie_ids:
+                    unique_movie_ids.add(movie['id'])
+
+                    # Fetch poster URL for the movie
+                    if movie.get('poster_path'):
+                        movie['poster_url'] = f"https://image.tmdb.org/t/p/w500{movie['poster_path']}"
+                    else:
+                        movie['poster_url'] = None
+
+                    filtered_movies.append(movie)
+
+            return filtered_movies
 
     except requests.exceptions.RequestException as e:
         print(f"Error making TMDb API request: {e}")
         return None
 
-
-
 if __name__ == "__main__":
-    #director_name = 'Christopher Nolan'
     director_name = 'Sofia Coppola'
-    #director_name = 'Coppola' #> NONE
-
     movies = search_movies_by_director(director_name)
 
     # Display the results
