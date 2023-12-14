@@ -23,11 +23,6 @@ Create a ".env" file and paste in the following contents:
 
 ```sh
 # this is the ".env" file...
-ALPHAVANTAGE_API_KEY="_______"
-MAILGUN_API_KEY="_______"
-MAILGUN_SENDER_ADDRESS="_______"
-MAILGUN_DOMAIN="_______"
-
 FLASK_APP="web_app"
 MOVIE_API_KEY = "_______"
 ```
