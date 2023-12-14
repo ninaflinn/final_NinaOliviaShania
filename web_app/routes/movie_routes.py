@@ -43,7 +43,7 @@ def movie_director_form():
 
 @movie_routes.route("/movie/director/dashboard", methods=["GET", "POST"])
 def movie_director_dashboard():
-    if request.method == "GET":
+    if request.method == "POST":
         # Get form data
         director_name = request.form.get("director_name")
 
