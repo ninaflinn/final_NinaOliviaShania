@@ -8,7 +8,7 @@
         {% for movie in movies %}
             <div class="col">
                 <div class="card">
-                    <img src="{% if movie.poster_url %}{{ movie.poster_url }}{% else %}{{ url_for('static', filename='posters/default.jpg') }}{% endif %}" class="card-img-top" alt="{% if movie.title %}{{ movie.title }}{% endif %}">
+                    <img src="{% if movie.poster_url %}{{ movie.poster_url }}{% else %}{{ url_for('static', filename='posters/default.jpg') }}{% endif %}" class="card-img-top" alt="{% if movie.title %}{{ movie.title }} Poster{% endif %}">
                     <div class="card-body">
                         <h5 class="card-title">{% if movie.title %}{{ movie.title }}{% endif %}</h5>
                         <p class="card-text">{% if movie.release_date %}Release Date: {{ movie.release_date }}{% endif %}</p>
