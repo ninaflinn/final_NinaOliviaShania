@@ -6,6 +6,12 @@
 
     <p class="lead">Search for movies by director name</p>
 
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
     <form action="/movie/director/dashboard" method="POST">
         <label>Director Name:</label>
         <input type="text" name="director_name" class="form-control" placeholder="Director Name" required>

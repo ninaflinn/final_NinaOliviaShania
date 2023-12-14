@@ -12,30 +12,40 @@ def movie_form():
 
 @movie_routes.route("/movie/genre/dashboard", methods=["GET", "POST"])
 def movie_genre_dashboard():
-    if request.method == "POST":
-        # Get form data
-        genre_id = request.form.get("genre_id")
-        start_year = request.form.get("start_year")
-        end_year = request.form.get("end_year")
-        lang = request.form.get("lang")
+    try:
+        if request.method == "POST":
+            # Get form data
+            genre_id = request.form.get("genre_id")
+            start_year = request.form.get("start_year")
+            end_year = request.form.get("end_year")
+            lang = request.form.get("lang")
 
-        print("Received Form Data:", genre_id, start_year, end_year, lang)  # Check form data
+            print("Received Form Data:", genre_id, start_year, end_year, lang)  # Check form data
 
-        # Call function to get movies based on user criteria
-        movies = search_movies_by_genre(genre_id, start_year, end_year, lang)
+            # Call function to get movies based on user criteria
+            movies = search_movies_by_genre(genre_id, start_year, end_year, lang)
 
-        print("Movies Retrieved:", movies)  # Check movies retrieved
+            print("Movies Retrieved:", movies)  # Check movies retrieved
 
-        if movies:
-            # Display movies if found
-            return render_template("movie_genre_dashboard.html", movies=movies)
-        else:
-            # Handle case when no movies are found
-            return render_template("no_movies_found.html")
+            if movies:
+                # Display movies if found
+                return render_template("movie_genre_dashboard.html", movies=movies)
+            else:
+                # Handle case when no movies are found
+                error_message = "No movies found for the specified criteria."
+                return render_template("movie_form.html", error_message=error_message)
 
-    # Direct access to the movie dashboard without form submission
-    print("Direct Access to Movie Genre Dashboard")
-    return render_template("movie_genre_dashboard.html", movies=None)
+        # Direct access to the movie dashboard without form submission
+        print("Direct Access to Movie Genre Dashboard")
+        return render_template("movie_genre_dashboard.html", movies=None)
+
+    except Exception as e:
+        # Log the error for debugging purposes
+        print(f"Error: {e}")
+
+        # Render the form template with an error message
+        error_message = "An error occurred. Please check your input and try again."
+        return render_template("movie_form.html", error_message=error_message)
 
 @movie_routes.route("/movie/director/form", methods=["GET"])
 def movie_director_form():
@@ -44,29 +54,37 @@ def movie_director_form():
 
 @movie_routes.route("/movie/director/dashboard", methods=["GET", "POST"])
 def movie_director_dashboard():
-    if request.method == "POST":
-        # Get form data
-        director_name = request.form.get("director_name")
+    try:
+        if request.method == "POST":
+            # Get form data
+            director_name = request.form.get("director_name")
 
-        print("Received Form Data:", director_name)  # Check form data
+            print("Received Form Data:", director_name)  # Check form data
 
-        # Call function to get movies based on user criteria
-        movies = search_movies_by_director(director_name)
+            # Call function to get movies based on user criteria
+            movies = search_movies_by_director(director_name)
 
-        print("Movies Retrieved:", movies)  # Check movies retrieved
+            print("Movies Retrieved:", movies)  # Check movies retrieved
 
-        if movies:
-            # Display movies if found
-            return render_template("movie_director_dashboard.html", movies=movies)
-        else:
-            # Handle case when no movies are found
-            return render_template("no_movies_found.html")
+            if movies:
+                # Display movies if found
+                return render_template("movie_director_dashboard.html", movies=movies)
+            else:
+                # Handle case when no movies are found
+                error_message = "No movies found for the specified director."
+                return render_template("movie_director_form.html", error_message=error_message)
 
-    # Direct access to the movie dashboard without form submission
-    print("Direct Access to Movie Director Dashboard")
-    return render_template("movie_director_dashboard.html", movies=None)
+        # Direct access to the movie dashboard without form submission
+        print("Direct Access to Movie Director Dashboard")
+        return render_template("movie_director_dashboard.html", movies=None)
 
+    except Exception as e:
+        # Log the error for debugging purposes
+        print(f"Error: {e}")
 
+        # Render the form template with an error message
+        error_message = "An error occurred. Please check your input and try again."
+        return render_template("movie_director_form.html", error_message=error_message)
 
 @movie_routes.route("/api/movies.json")
 def movies_api():

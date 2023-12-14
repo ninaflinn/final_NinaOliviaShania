@@ -7,6 +7,12 @@
 
     <p class="lead">Search for movies by genre, release year, and language</p>
 
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
     <form action="/movie/genre/dashboard" method="POST">
 
         <label>Select Genre:</label>
