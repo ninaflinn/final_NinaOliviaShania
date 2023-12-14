@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template
 
 from app.movies_by_genre import search_movies_by_genre
+from app.movies_by_director import search_movies_by_director
 
 movie_routes = Blueprint("movie_routes", __name__)
 
