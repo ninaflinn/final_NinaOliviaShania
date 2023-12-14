@@ -47,6 +47,11 @@ Run the movie director dashboard:
 python -m app.movies_by_director
 ```
 
+Run the movie actor dashboard:
+```sh
+python -m app.movies_by_actor
+```
+
 ### Web App
 
 Run the web app (then view in the browser at http://localhost:5000/):

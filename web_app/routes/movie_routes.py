@@ -2,6 +2,7 @@ from flask import Blueprint, request, render_template
 
 from app.movies_by_genre import search_movies_by_genre
 from app.movies_by_director import search_movies_by_director
+from app.movies_by_actor import search_movies_by_actor
 
 movie_routes = Blueprint("movie_routes", __name__)
 
@@ -85,6 +86,45 @@ def movie_director_dashboard():
         # Render the form template with an error message
         error_message = "An error occurred. Please check your input and try again."
         return render_template("movie_director_form.html", error_message=error_message)
+
+@movie_routes.route("/movie/actor/form", methods=["GET"])
+def movie_actor_form():
+    print("MOVIE FORM...")
+    return render_template("movie_actor_form.html")
+
+@movie_routes.route("/movie/actor/dashboard", methods=["GET", "POST"])
+def movie_actor_dashboard():
+    try:
+        if request.method == "POST":
+            # Get form data
+            actor_name = request.form.get("actor_name")
+
+            print("Received Form Data:", actor_name)  # Check form data
+
+            # Call function to get movies based on user criteria
+            movies = search_movies_by_actor(actor_name)
+
+            print("Movies Retrieved:", movies)  # Check movies retrieved
+
+            if movies:
+                # Display movies if found
+                return render_template("movie_actor_dashboard.html", movies=movies)
+            else:
+                # Handle case when no movies are found
+                error_message = "No movies found for the specified director."
+                return render_template("movie_actor_form.html", error_message=error_message)
+
+        # Direct access to the movie dashboard without form submission
+        print("Direct Access to Movie Actor Dashboard")
+        return render_template("movie_actor_dashboard.html", movies=None)
+
+    except Exception as e:
+        # Log the error for debugging purposes
+        print(f"Error: {e}")
+
+        # Render the form template with an error message
+        error_message = "An error occurred. Please check your input and try again."
+        return render_template("movie_actor_form.html", error_message=error_message)
 
 @movie_routes.route("/api/movies.json")
 def movies_api():
