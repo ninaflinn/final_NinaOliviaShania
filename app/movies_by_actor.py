@@ -49,31 +49,39 @@ def search_movies_by_actor(actor_name):
             # Parse the JSON response for the person credits
             person_credits_data = person_credits_response.json()
 
-            # Extract and return the list of movies with this person in it
-            movies = person_credits_data.get('crew', [])
+            # Extract and return the list of movies with this person in an acting role
+            movies = person_credits_data.get('cast', [])
 
-            # Fetch poster URLs for each movie
+            # Create a set to keep track of unique movie ids
+            unique_movie_ids = set()
+
+            # Filter out duplicate movies based on their id and only include movies where the person had an acting role
+            filtered_movies = []
             for movie in movies:
-                if movie.get('poster_path'):
-                    movie['poster_url'] = f"https://image.tmdb.org/t/p/w500{movie['poster_path']}"
-                else:
-                    movie['poster_url'] = None
-            return movies
+                if movie.get('id') and movie['id'] not in unique_movie_ids and movie.get('character'):
+                    unique_movie_ids.add(movie['id'])
+
+                    # Fetch poster URL for the movie
+                    if movie.get('poster_path'):
+                        movie['poster_url'] = f"https://image.tmdb.org/t/p/w500{movie['poster_path']}"
+                    else:
+                        movie['poster_url'] = None
+
+                    filtered_movies.append(movie)
+
+            return filtered_movies
 
     except requests.exceptions.RequestException as e:
         print(f"Error making TMDb API request: {e}")
         return None
 
-
-
 if __name__ == "__main__":
     actor_name = 'Ryan Gosling'
-
     movies = search_movies_by_actor(actor_name)
 
     # Display the results
     if movies:
         for movie in movies:
-            print(f"{movie['title']} ({movie['release_date']})")
+            print(f"{movie['title']} ({movie['release_date']}) - Character: {movie['character']}")
     else:
         print(f"No movies found for actor/actress {actor_name}.")
