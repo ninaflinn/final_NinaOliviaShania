@@ -35,7 +35,7 @@ def movie_genre_dashboard():
                 # Handle case when no movies are found
                 print("error")
                 error_message = "No movies found for the specified criteria."
-                return render_template("movie_genre_dashboard.html", error_message=error_message)
+                return render_template("movie_form.html", error_message=error_message)
 
         # Direct access to the movie dashboard without form submission
         print("Direct Access to Movie Genre Dashboard")
