@@ -20,7 +20,7 @@ def movie_genre_dashboard():
             end_year = request.form.get("end_year")
             lang = request.form.get("lang")
 
-            print("Received Form Data:", genre_id, start_year, end_year, lang)  # Check form data
+            print("Received Form Data:", genre_id, start_year, end_year, lang)
 
             movies = search_movies_by_genre(genre_id, start_year, end_year, lang)
 
@@ -53,7 +53,7 @@ def movie_director_dashboard():
         if request.method == "POST":
             director_name = request.form.get("director_name")
 
-            print("Received Form Data:", director_name)  # Check form data
+            print("Received Form Data:", director_name) 
 
             movies = search_movies_by_director(director_name)
 
